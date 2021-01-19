@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DBPATH "./sigedb"
+
 struct date {
 	int year;
 	int month;
@@ -13,11 +15,15 @@ struct post {
 	char author[50];
 	char title[250];
 	char url[150];
-	char filePath;
+	char filePath[200];
 };
 
 void addPost(struct post *newPost) {
-
+	FILE *dbptr;
+	dbptr = fopen(DBPATH, "a");
+	//writing to db requires turning date into readable format
+	fputs(newPost->author, dbptr);
+	fclose(dbptr);
 }
 
 
@@ -34,7 +40,7 @@ int main(int argc, char *argv[]) {
 	//first argument is command, following are options
 
 	struct post userProvided;
-
+	//options
 	for (int i = 1; i < argc; i++) {
 		//detect flags
 		if (argv[i][0] == '-') {
@@ -67,13 +73,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	//launch commands
-	if (argv[1] == "add") {
-		addPost(&userProvided);
-	} else if (argv[1] == "list") {
-		listPosts();
-	} else if (argv[1] == "remove") {
-		removePost();
-	}
+	//command parsing requires string comparison, annoying, handle later
+	addPost(&userProvided);
 	return 0;
 }
