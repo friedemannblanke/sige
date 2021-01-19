@@ -37,7 +37,10 @@
 	* int Month
 	* int Day
 
-* post getMetaData(str)
+* post getMetaData(str) **CHANGED**
+	For now, Sige will not automatically extract metadata, however it may be specified in the form of command line arguments.
+	The reason behind this is, that the application will, for now, not handle Markdown conversion itself, and instead rely on the user to provide an HTML file as input.
+		At the time of writing this seems like the most sensible option, because it allows the user greater control over the final product, and can easily be replicated by piping to Sige's stdin.
 * str mdToHtml(str)
 	* make use of library or external application
 * int implementTemplates(post)
