@@ -2,64 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "commands.h"
+#include "structs.h"
+
 #define DBPATH "./sigedb"
 //#define SITEDIR "./site"
 
-struct date {
-	int year;
-	int month;
-	int day;
-};
-
-struct post {
-	struct date date;
-	char author[50];
-	char title[250];
-	char url[150];
-	char filePath[200];
-};
-
-
-struct runOptions {
-	char outputFormat;
-	/* OPTIONS
-	 * q quiet
-	 * s standalone
-	 * a archive
-	 * f feed
-	 * r rss
-	 */
-};
-
-void addPost(struct post *newPost) {
-	FILE *dbPtr;
-	dbPtr = fopen(DBPATH, "a");
-	char dbBuffer[650];
-	//tab separated values, each post on its own line:
-	//url	title	year-month-day	author	filePath
-	sprintf(dbBuffer, "%s\t%s\t%d-%d-%d\t%s\t%s\n",
-		newPost->url,
-		newPost->title,
-		newPost->date.year,
-		newPost->date.month,
-		newPost->date.day,
-		newPost->author,
-		newPost->filePath
-	);
-	printf("%s", dbBuffer);
-	fclose(dbPtr);
-}
-
-
-void listPosts() {
-	FILE *dbptr;
-	dbptr = fopen(DBPATH, "r");
-	fclose(dbptr);
-}
-
-void removePost(char url[]) {
-
-}
 
 
 int main(int argc, char *argv[]) {
