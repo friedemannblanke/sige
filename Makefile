@@ -2,10 +2,18 @@ CC = gcc
 CFLAGS = -std=c99 -pedantic -Wall -Wextra
 LDFLAGS = -lm
 
-all: sige.c
-	gcc sige.o -o sige
+all: sige.o
+	$(CC) $(CFLAGS) sige.o commands.o -o sige
 
-sige.c: commands.h structs.h
+sige.o: sige.c commands.h structs.h
+	$(CC) $(CFLAGS) -c sige.c
 
-commands.o: structs.h
-	gcc -I . -c commands
+commands.o: commands.h structs.h
+	$(CC) $(CFLAGS) -c commands.c
+
+structs.o: structs.h
+	$(CC) $(CFLAGS) -c structs.h -o structs.o
+
+clean:
+	rm sige sige.o commands.o
+	rm sigedb && touch sigedb
