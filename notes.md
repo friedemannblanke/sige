@@ -1,9 +1,6 @@
 # Sige -- Static Site Generator
 [Helpful](https://github.com/oz123/awesome-c)
 
-## TBD
-* Database: SQL, SQLite, plain JSON?
-
 ## Specs
 ### Templating
 * Get metadata (author name, date...) from input file (YAML preamble?)
@@ -16,9 +13,10 @@
 ### User Interaction/ Configuration
 * Maybe: maintain DB of visible posts, allow to remove
 	* Would enable automatic link generation
-* Maybe: Only take HTML, let user handle conversion
+*Only take HTML, let user handle conversion
 * Accept stdin as post
 * Handle multiple posts at once, add in order of arguments
+	//deprioritize since relatively trivial with Bash
 
 ## Design
 * C compatible YAML parsing library? -> libYAML
@@ -29,7 +27,7 @@
 	* date Date
 	* str Author
 	* str Title
-	* str Body
+	* str body //TODO
 	* str Link
 
 * Struct date
@@ -37,12 +35,6 @@
 	* int Month
 	* int Day
 
-* post getMetaData(str) **CHANGED**
-	For now, Sige will not automatically extract metadata, however it may be specified in the form of command line arguments.
-	The reason behind this is, that the application will, for now, not handle Markdown conversion itself, and instead rely on the user to provide an HTML file as input.
-		At the time of writing this seems like the most sensible option, because it allows the user greater control over the final product, and can easily be replicated by piping to Sige's stdin.
-* str mdToHtml(str)
-	* make use of library or external application
 * int implementTemplates(post)
 	* write to file system
 	* Signature of individual template implementors depends on type of template
@@ -53,3 +45,30 @@
 3. Builds ready-to-deploy site directories
 4. Friendly towards shell scripting with focus on command line options over interactivity
 5. Safeguards against accidental content deletion
+
+## Implementation: TODO
+[ ] fix project structure across multiple files
+
+[ ] Change `struct post` to store `body` in string, instead of as FILE
+	* Do not allow file path to be passed as argument
+	* Adds needless complication
+	* Can easily be replicated by user
+
+[ ] `void getPost(struct post *newPost)`
+	Use proven buffered approach
+
+[ ] Output
+	implement one template (standalone page), but write for expansion
+	[ ] to stdout
+	[ ] to file
+
+[ ] `void applyTemplates(struct post *newPost)`
+	Replace substrings in template
+		Potential custom implementation:
+			* Find `pattern` in template
+			* `strcat` to combine everything before `pattern` with `textToInsert`
+			* `strcat` to combine result of previous step with everything after `pattern`
+
+[ ] `generateURL`
+	* Replace ` ` with `-`
+	* `strcat` result of previous step with parent component of URL
