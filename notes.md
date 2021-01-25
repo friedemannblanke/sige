@@ -71,4 +71,4 @@
 
 [ ] `generateURL`
 	* Replace ` ` with `-`
-	* `strcat` result of previous step with parent component of URL
+	* Lowercase everything

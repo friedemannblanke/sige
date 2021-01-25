@@ -3,14 +3,14 @@
 #include "structs.h"
 #include "utils.h"
 
-void generateURL(char *titleInput, char *urlOutput) {
+void generateURL(struct post *workingPost) {
 	int parseIndex = 0;
 	do {
-		if (titleInput[i] == ' ') {
-			urlOutput[i] = '-';
+		if (workingPost->title[i] == ' ') {
+			workingPost->url[i] = '-';
 		} else {
-			urlOutput[i] = tolower(titleInput[i]);
+			workingPost->url[i] = tolower(workingPost->title[i]);
 		}
 		i++;
-	} while (titleInput[i] != '\0')
+	} while (workingPost->title[i] != '\0')
 }

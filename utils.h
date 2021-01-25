@@ -24,4 +24,4 @@ struct runOptions {
 	 */
 };
 
-void generateURL(char *titleInput, char *urlOutput);
+void generateURL(struct post *workingPost);
