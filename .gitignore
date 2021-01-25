@@ -1,2 +1,5 @@
 sige
 sigedb
+experiments
+*.o
+*.h.gch
