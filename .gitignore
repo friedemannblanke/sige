@@ -1,5 +1,6 @@
 sige
 sigedb
 experiments
+!experiments/buffered_reading.c
 *.o
 *.h.gch
