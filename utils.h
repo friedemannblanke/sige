@@ -23,3 +23,5 @@ struct runOptions {
 	 * r rss
 	 */
 };
+
+void generateURL(char *titleInput, char *urlOutput);

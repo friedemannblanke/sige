@@ -5,9 +5,6 @@
 #include "commands.h"
 #include "structs.h"
 
-#define DBPATH "./sigedb"
-//#define SITEDIR "./site"
-
 
 
 int main(int argc, char *argv[]) {
