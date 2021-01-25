@@ -25,3 +25,4 @@ struct runOptions {
 };
 
 void generateURL(struct post *workingPost);
+char *searchAndReplace(char target[], char *baseText);
