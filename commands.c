@@ -2,16 +2,16 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "commands.h"
 #include "utils.h"
 
 #define DBPATH ./sigefiles/sigedb
 #define SITEDIR ./sigefiles/site
 #define POSTDIR ./sigefiles/site/posts
 #define TEMPLATEDIR ./sigefiles/templates
+#define BUFFER_LENGTH 200
 
 void addPost(struct post *newPost) {
-	readIn(newPost);
+	int bodyLength = readIn(newPost);
 	generateURL(newPost);
 	strcpy(newPost->filePath, "POSTDIR");
 	strcat(newPost->filePath, newPost->url);
@@ -37,13 +37,12 @@ void addPost(struct post *newPost) {
 	FILE *templateFile;
 	templateFile = fopen("TEMPLATEDIR/post", "r");
 	char *standaloneTemplate = NULL;
-	size_t len;
-	size_t bytes_read = getdelim(&standaloneTemplate, &len, '\0', templateFile);
-
+	size_t standaloneLength;
+	size_t bytes_read = getdelim(&standaloneTemplate, &standaloneLength, '\0', templateFile);
 	fclose(templateFile);
 
-	newPost->body = searchAndReplace("<!--BODY-->", standaloneTemplate, newPost->body);
-	newPost->body = searchAndReplace("<!--AUTHOR-->", newPost->body, newPost->author);
+	newPost->body = searchAndReplace("<!--BODY-->", standaloneTemplate, newPost->body, bodyLength);
+	newPost->body = searchAndReplace("<!--AUTHOR-->", newPost->body, newPost->author, bodyLength);
 
 	FILE *postResult;
 	postResult = fopen(newPost->filePath, "w");

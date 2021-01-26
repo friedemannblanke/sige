@@ -23,7 +23,7 @@ void generateURL(struct post *workingPost) {
 			workingPost->url[parseIndex] = tolower(workingPost->title[parseIndex]);
 		}
 		parseIndex++;
-	} while (workingPost->title[parseIndex] != '\0')
+	} while (workingPost->title[parseIndex] != '\0');
 }
 
 /* return false if any two characters at the same index in two strings do not match
@@ -42,13 +42,13 @@ int stringMatch(char *compA, char *compB) {
 			return 0;
 		}
 		parseIndex++;
-	} while (compA[parseIndex] != '\0')
+	} while (compA[parseIndex] != '\0');
 	return 1;
 }
 
 //**WARNING:**does not handle less or more than one occurence of target within baseText
 //should multiple occurences need to be handled, it is recommended to rewrite this function instead of using a loop with a stringMatch condition, for efficiency reasons
-char *searchAndReplace(char *target, char *baseText, char *toInsert) {
+char *searchAndReplace(char *target, char *baseText, char *toInsert, int resultLength) {
 
 	//FIRST: find start of target in baseText
 	char *searchBuffer;
@@ -74,7 +74,7 @@ char *searchAndReplace(char *target, char *baseText, char *toInsert) {
 		result[i] = baseText[i];
 	}
 	int copyIndex = 0;
-	while (toInsert != '\0') { //target
+	while (*toInsert != '\0') { //target
 		result[parseIndex + copyIndex] = toInsert[copyIndex++];
 	}
 	for (int i = parseIndex; baseText[i] != '\0'; i++) { //after target
@@ -83,7 +83,7 @@ char *searchAndReplace(char *target, char *baseText, char *toInsert) {
 	return result;
 }
 
-void readIn(struct post *newPost) {
+int readIn(struct post *newPost) {
 	newPost->body = (char *) malloc(BUFFER_LENGTH);
 	int bodyLength = BUFFER_LENGTH;
 
@@ -104,4 +104,5 @@ void readIn(struct post *newPost) {
 	readBuffer[bufferPos] = '\0'; //append NULL to readBuffer to ensure proper handling of string end
 	newPost->body = (char *) realloc(newPost->body, bodyLength += BUFFER_LENGTH);
 	strcat(newPost->body, readBuffer);
+	return bodyLength;
 }

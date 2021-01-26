@@ -24,6 +24,12 @@ struct runOptions {
 	 */
 };
 
+//Utils
 void generateURL(struct post *workingPost);
-char *searchAndReplace(char *target, char *baseText, char *toInsert);
-void readIn(struct post *newPost);
+char *searchAndReplace(char *target, char *baseText, char *toInsert, int resultLength);
+int readIn(struct post *newPost);
+
+//Commands
+void addPost(struct post *newPost);
+void listPosts(void);
+void removePost(char url[]);

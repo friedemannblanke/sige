@@ -2,10 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "commands.h"
-#include "structs.h"
-
-
+#include "utils.h"
 
 int main(int argc, char *argv[]) {
 	//parse CLI args
@@ -50,13 +47,14 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	printf("%s", userProvided.author);
 	switch(argv[0][0]) {
 		case 'a':
-			addPost(userProvided);
+			addPost(&userProvided);
 			break;
 		default:
 			printf("\x1b[31mError:\x1b[0m %c is not a recognized command\n", argv[0][0]);
 	}
-	free(userProvided)
+	//free(userProvided.body);
 	return 0;
 }
