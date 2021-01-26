@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c99 -pedantic -Wall -Wextra
+CFLAGS = -std=c99 #-pedantic -Wall -Wextra
 LDFLAGS = -lm
 
 all: sige.o

@@ -1,5 +1,5 @@
 # Sige -- Static Site Generator
-[Helpful](https://github.com/oz123/awesome-c)
+[Helpful?](https://github.com/oz123/awesome-c)
 
 ## Specs
 ### Templating
@@ -72,3 +72,13 @@
 [ ] `generateURL`
 	* Replace ` ` with `-`
 	* Lowercase everything
+
+### Prioritize: MVP
+**Treat everything as plain text**, HTML/ Markdown are just variations on that.
+**Do basics, write for expansion**
+
+Kind of done, ready to debug
+[x] Search and replace
+[ ] Write to file with title in specified subdirectory
+[x] CLI options
+[x] Use stdin to supply post, instead of working with live file

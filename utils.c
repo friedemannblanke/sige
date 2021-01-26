@@ -1,8 +1,11 @@
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
 
-#include "structs.h"
 #include "utils.h"
+
+#define BUFFER_LENGTH 1000
 
 /*generate the rightmost component of a posts URL by converting the title to lower case and replacing spaces with dashes
 **WARNING:** does not handle URL-unsafe characters
@@ -44,8 +47,8 @@ int stringMatch(char *compA, char *compB) {
 }
 
 //**WARNING:**does not handle less or more than one occurence of target within baseText
-//should multiple occurences need to be handled, it is recommended to rewrite this function, instead of using a loop with a stringMatch condition, for efficiency reasons
-char *searchAndReplace(char target[], char *baseText, char *toInsert) {
+//should multiple occurences need to be handled, it is recommended to rewrite this function instead of using a loop with a stringMatch condition, for efficiency reasons
+char *searchAndReplace(char *target, char *baseText, char *toInsert) {
 
 	//FIRST: find start of target in baseText
 	char *searchBuffer;
@@ -78,4 +81,27 @@ char *searchAndReplace(char target[], char *baseText, char *toInsert) {
 		result[i + copyIndex] = baseText[i + sizeof(target)];
 	}
 	return result;
+}
+
+void readIn(struct post *newPost) {
+	newPost->body = (char *) malloc(BUFFER_LENGTH);
+	int bodyLength = BUFFER_LENGTH;
+
+	char readBuffer[BUFFER_LENGTH];
+	int bufferPos = 0;
+	//read stdin into readBuffer until EOF is read
+	while (( readBuffer[bufferPos] = getchar() ) != EOF) {
+		bufferPos++;
+		//if the last element of readBuffer was just written into: extend body, append readBuffer to body, reset bufferPos to beginning of readBuffer
+		if (bufferPos == BUFFER_LENGTH) {
+			newPost->body = (char *) realloc(newPost->body, bodyLength += BUFFER_LENGTH);
+			strcat(newPost->body, readBuffer);
+			bufferPos = 0;
+		}
+	}
+
+	//readBuffer has to be added to body one last time, since copying over step doesn't get executed after EOF has been read
+	readBuffer[bufferPos] = '\0'; //append NULL to readBuffer to ensure proper handling of string end
+	newPost->body = (char *) realloc(newPost->body, bodyLength += BUFFER_LENGTH);
+	strcat(newPost->body, readBuffer);
 }

@@ -10,8 +10,8 @@ struct post {
 	char title[250];
 	char url[150];
 	char filePath[200];
+	char *body;
 };
-
 
 struct runOptions {
 	char outputFormat;
@@ -25,4 +25,5 @@ struct runOptions {
 };
 
 void generateURL(struct post *workingPost);
-char *searchAndReplace(char target[], char *baseText);
+char *searchAndReplace(char *target, char *baseText, char *toInsert);
+void readIn(struct post *newPost);

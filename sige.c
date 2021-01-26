@@ -50,7 +50,13 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	//command parsing requires string comparison, annoying, handle later
-	addPost(&userProvided);
+	switch(argv[0][0]) {
+		case 'a':
+			addPost(userProvided);
+			break;
+		default:
+			printf("\x1b[31mError:\x1b[0m %c is not a recognized command\n", argv[0][0]);
+	}
+	free(userProvided)
 	return 0;
 }
